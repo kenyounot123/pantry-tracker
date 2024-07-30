@@ -2,7 +2,7 @@ import { Box, Stack } from "@mui/material";
 import { Typography } from "@mui/material";
 
 interface PantryItem {
-  id: number;
+  id: string;
   name: string;
   quantity: number;
 }
