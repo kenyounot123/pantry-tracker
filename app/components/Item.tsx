@@ -13,10 +13,10 @@ interface ItemProps {
 export default function Item({pantryItem}: ItemProps) {
   return (
     <Stack direction={"row"} spacing={15} borderBottom={1} borderColor={"secondary.main"} py={2}>
-      <Typography sx={{ flexGrow: 1 }}>
+      <Typography sx={{ flexGrow: 1, color: "primary.main", fontWeight: 600 }}>
         {pantryItem.name}
       </Typography>
-      <Typography>
+      <Typography sx={{color: "primary.main", fontWeight: 600}}>
         {pantryItem.quantity}
       </Typography>
       <Typography>
