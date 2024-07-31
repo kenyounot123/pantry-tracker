@@ -4,37 +4,10 @@ import { db } from "./lib/firebase"
 import { collection, addDoc } from "firebase/firestore"; 
 import { doc, deleteDoc } from "firebase/firestore";
 
-export type FormState = {
-  name: string,
-  quantity: string,
-  errors: {
-    name: string | undefined,
-    quantity: string | undefined
-  }
-}
 
-export async function createItem(previousState: FormState, formData: FormData) {
+export async function createItem(formData: FormData) {
   const name = formData.get('name') as string;
   const quantity = parseInt(formData.get('quantity') as string);
-
-  if (!name) {
-    return {
-      name,
-      errors: {
-        name: "name must be defined"
-      }
-    }
-  }
-  
-  if (!quantity) {
-    return {
-      quantity,
-      errors: {
-        quantity: "quantity must be defined"
-      }
-    }
-  }
-
 
   try {
     await addDoc(collection(db, "pantry"), {
@@ -46,14 +19,6 @@ export async function createItem(previousState: FormState, formData: FormData) {
     console.error('Error creating item:', error);
   }
 
-  return {
-    name: "",
-    quantity: "",
-    errors: {
-      name: undefined,
-      quantity: undefined
-    }
-  }
 }
 
 export async function deleteItem(id: string) {
