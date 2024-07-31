@@ -14,8 +14,8 @@ interface DeleteItemProps {
 }
 export default async function DeleteItemForm({pantryItem}: DeleteItemProps) {
   return (
-    <Box component="form" action={deleteItem.bind(null, pantryItem.id)}>
-      <Button type="submit">
+    <Box ml={1} component="form" action={deleteItem.bind(null, pantryItem.id)}>
+      <Button type="submit" variant="outlined" color="primary">
         ❌
       </Button>
     </Box>

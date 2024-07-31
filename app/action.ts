@@ -3,6 +3,7 @@ import { revalidatePath } from "next/cache";
 import { db } from "./lib/firebase"
 import { collection, addDoc } from "firebase/firestore"; 
 import { doc, deleteDoc } from "firebase/firestore";
+import { updateDoc } from "firebase/firestore";
 
 
 export async function createItem(formData: FormData) {
@@ -19,6 +20,16 @@ export async function createItem(formData: FormData) {
     console.error('Error creating item:', error);
   }
 
+}
+
+export async function updateItem(id: string, formData: FormData) {
+  const name = formData.get('name') as string;
+  const quantity = parseInt(formData.get('quantity') as string);
+  const itemRef = doc(db, "pantry", id)
+  await updateDoc(itemRef, {
+    name: name,
+    quantity: quantity
+  })
 }
 
 export async function deleteItem(id: string) {

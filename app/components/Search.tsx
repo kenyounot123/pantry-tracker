@@ -18,7 +18,7 @@ export default function Search({placeholder} : {placeholder: string}) {
       }
       replace(`${pathname}?${params.toString()}`);
     },
-    200 // Debounce delay in milliseconds
+    200 
   );
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
