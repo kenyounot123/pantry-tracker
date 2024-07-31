@@ -1,30 +1,23 @@
-import { Container, Box, Button, Typography } from "@mui/material";
-import { Input } from '@mui/material';
-import Item from "./components/Item";
-import getAllItems from "@/data-access/items";
+import { Container, Box, Typography } from "@mui/material";
 import { unstable_noStore } from "next/cache";
 import FormModalButton from "./components/FormModalButton";
+import Search from "./components/Search";
+import ItemList from "./components/ItemList";
 
-export default async function Home() {
+export default async function Home({searchParams} : {searchParams?: {query?: string; page?: string}}) {
   unstable_noStore();
-  const items = await getAllItems()
-
+  const query = searchParams?.query || ""
   return (
     <Container> 
       <Typography sx={{textAlign: "center", color: "primary.main", fontWeight: 600, fontSize: 48}} variant="h2">Track Your Pantry Items</Typography>
-      <Box sx={{ borderRadius: '12px', bgcolor: "primary.light", pb:1}}>
-        <Box sx={{ mt: 5, display:"flex", alignItems: "center", justifyContent:"center", p:3, gap:3}}>
-          <Input sx={{bgcolor: "white"}}></Input>
-          <Typography sx={{color: "secondary.main", fontSize: 20, fontWeight: 600}}>Search</Typography>
-        </Box>
+      <Box sx={{ borderRadius: '12px', bgcolor: "primary.light", pb:2}}>
+        <Search placeholder="Search Items..."/>
         <Box sx={{display: "flex", p:2}}>
           <Typography sx={{ maxWidth: "45%", color: "secondary.main", flexGrow: 1, fontSize: 20, fontWeight: 600}}>Item</Typography>
           <Typography sx={{color: "secondary.main", flexGrow: 1, fontSize: 20, fontWeight: 600}}>Qty</Typography>
         </Box>
-        <Box p={2}>
-          {items && items.map((item) => (
-            <Item key={item.id} pantryItem={item}/>
-          ))}
+        <Box sx={{overflowY: 'auto', maxHeight:500}}>
+          <ItemList query={query}/>
         </Box>
       </Box>
       {/* Opens up a modal form */}

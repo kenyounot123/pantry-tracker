@@ -7,8 +7,7 @@ interface PantryItem {
   name: string;
   quantity: number;
 }
-
-export default async function getAllItems(): Promise<PantryItem[]> {
+export async function getFilteredItems(query:string): Promise<PantryItem[]> {
   try {
     const q = await getDocs(collection(db, "pantry"));
     const docs: PantryItem[] = q.docs.map(doc => {
@@ -19,7 +18,11 @@ export default async function getAllItems(): Promise<PantryItem[]> {
         quantity: docData.quantity ?? 0, 
       };
     });
-    return docs;
+    const filteredItems = docs.filter(item =>
+      item.name.toLowerCase().includes(query.toLowerCase())
+    );
+    return filteredItems
+    
   } catch (error) {
     console.error("Error fetching data from Firestore:", error);
     return []; // Return an empty array in case of an error

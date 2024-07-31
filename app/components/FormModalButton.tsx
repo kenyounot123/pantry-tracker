@@ -1,7 +1,6 @@
 'use client'
 import NewItemForm from "./NewItemForm";
 import { useState } from "react";
-import { createItem } from "../action";
 import { Modal, Box, Button } from "@mui/material";
 const style = {
   position: 'absolute' as 'absolute',
