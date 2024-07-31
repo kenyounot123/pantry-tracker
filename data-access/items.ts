@@ -8,16 +8,15 @@ interface PantryItem {
   quantity: number;
 }
 
-export default async function getItems(): Promise<PantryItem[]> {
+export default async function getAllItems(): Promise<PantryItem[]> {
   try {
     const q = await getDocs(collection(db, "pantry"));
     const docs: PantryItem[] = q.docs.map(doc => {
-      const docData = doc.data() as Partial<PantryItem>; // Use Partial to handle missing fields
-      // Ensure all required fields are present, otherwise provide default values
+      const docData = doc.data() as Partial<PantryItem>; 
       return {
-        id: doc.id, // Firestore document ID
-        name: docData.name ?? '', // Provide default value if missing
-        quantity: docData.quantity ?? 0, // Provide default value if missing
+        id: doc.id, 
+        name: docData.name ?? '', 
+        quantity: docData.quantity ?? 0, 
       };
     });
     return docs;

@@ -1,5 +1,6 @@
-import { Box, Stack } from "@mui/material";
+import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
+import DeleteItemForm from "./DeleteItemForm";
 
 interface PantryItem {
   id: string;
@@ -12,16 +13,14 @@ interface ItemProps {
 }
 export default function Item({pantryItem}: ItemProps) {
   return (
-    <Stack direction={"row"} spacing={15} borderBottom={1} borderColor={"secondary.main"} py={2}>
-      <Typography sx={{ flexGrow: 1, color: "primary.main", fontWeight: 600 }}>
+    <Box sx={{display: "flex", justifyContent:"space-between", alignItems:"center"}} borderBottom={1} borderColor={"secondary.main"} py={2}>
+      <Typography sx={{ flexGrow: 1, color: "primary.main", fontWeight: 600, maxWidth: "45%" }}>
         {pantryItem.name}
       </Typography>
-      <Typography sx={{color: "primary.main", fontWeight: 600}}>
+      <Typography sx={{flexGrow: 1, color: "primary.main", fontWeight: 600}}>
         {pantryItem.quantity}
       </Typography>
-      <Typography>
-      ❌
-      </Typography>
-    </Stack>
+      <DeleteItemForm pantryItem={pantryItem}/>
+    </Box>
   )
 }
