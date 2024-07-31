@@ -10,18 +10,20 @@ export default async function Home({searchParams} : {searchParams?: {query?: str
   return (
     <Container> 
       <Typography sx={{textAlign: "center", color: "primary.main", fontWeight: 600, fontSize: 48}} variant="h2">Track Your Pantry Items</Typography>
-      <Box sx={{ borderRadius: '12px', bgcolor: "primary.light", pb:2}}>
-        <Search placeholder="Search Items..."/>
-        <Box sx={{display: "flex", p:2}}>
-          <Typography sx={{ maxWidth: "45%", color: "secondary.main", flexGrow: 1, fontSize: 20, fontWeight: 600}}>Item</Typography>
-          <Typography sx={{color: "secondary.main", flexGrow: 1, fontSize: 20, fontWeight: 600}}>Qty</Typography>
+      <Box sx={{maxWidth: { xs:"100%", md:"80%"}, mx: "auto"}}>
+        <Box sx={{ borderRadius: '12px', bgcolor: "primary.light", pb:2}}>
+          <Search placeholder="Search Items..."/>
+          <Box sx={{display: "flex", p:2}}>
+            <Typography sx={{ maxWidth: "45%", color: "secondary.main", flexGrow: 1, fontSize: 20, fontWeight: 600}}>Item</Typography>
+            <Typography sx={{color: "secondary.main", flexGrow: 1, fontSize: 20, fontWeight: 600}}>Qty</Typography>
+          </Box>
+          <Box sx={{overflowY: 'auto', maxHeight:500}}>
+            <ItemList query={query}/>
+          </Box>
         </Box>
-        <Box sx={{overflowY: 'auto', maxHeight:500}}>
-          <ItemList query={query}/>
-        </Box>
+        {/* Opens up a modal form */}
+        <FormModalButton/>
       </Box>
-      {/* Opens up a modal form */}
-      <FormModalButton/>
     </Container>
   );
 }
