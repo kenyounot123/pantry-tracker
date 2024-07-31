@@ -4,20 +4,55 @@ import { db } from "./lib/firebase"
 import { collection, addDoc } from "firebase/firestore"; 
 import { doc, deleteDoc } from "firebase/firestore";
 
-export async function createItem(formData: FormData) {
+export type FormState = {
+  name: string,
+  quantity: string,
+  errors: {
+    name: string | undefined,
+    quantity: string | undefined
+  }
+}
+
+export async function createItem(previousState: FormState, formData: FormData) {
   const name = formData.get('name') as string;
-  const quantity = formData.get('quantity') as string;
+  const quantity = parseInt(formData.get('quantity') as string);
+
+  if (!name) {
+    return {
+      name,
+      errors: {
+        name: "name must be defined"
+      }
+    }
+  }
+  
+  if (!quantity) {
+    return {
+      quantity,
+      errors: {
+        quantity: "quantity must be defined"
+      }
+    }
+  }
+
 
   try {
-    console.log('Item Created:', { name, quantity });
-    const docRef = await addDoc(collection(db, "pantry"), {
+    await addDoc(collection(db, "pantry"), {
       name: name,
       quantity: quantity
     })
-    console.log("Document written with ID: ", docRef.id);
     revalidatePath("/")
   } catch (error) {
     console.error('Error creating item:', error);
+  }
+
+  return {
+    name: "",
+    quantity: "",
+    errors: {
+      name: undefined,
+      quantity: undefined
+    }
   }
 }
 

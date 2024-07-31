@@ -3,6 +3,7 @@ import { Input } from '@mui/material';
 import Item from "./components/Item";
 import getAllItems from "@/data-access/items";
 import { unstable_noStore } from "next/cache";
+import FormModalButton from "./components/FormModalButton";
 
 export default async function Home() {
   unstable_noStore();
@@ -27,11 +28,7 @@ export default async function Home() {
         </Box>
       </Box>
       {/* Opens up a modal form */}
-      <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
-        <Button size="large" variant="contained">
-          Add Item
-        </Button>
-      </Box>
+      <FormModalButton/>
     </Container>
   );
 }
