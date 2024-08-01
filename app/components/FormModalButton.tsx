@@ -32,7 +32,7 @@ export default function FormModalButton() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <NewItemForm/>
+          <NewItemForm handleClose={handleClose}/>
         </Box>
       </Modal>
     </>

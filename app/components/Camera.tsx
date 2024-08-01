@@ -7,11 +7,12 @@ import Image from "next/image";
 interface CameraComponentProps {
   showCamera: boolean;
   setShowCamera: (show: boolean) => void;
+  image: string | null;
+  setImage: (image: string | null) => void;
 }
 
-const CameraComponent = ({showCamera, setShowCamera}: CameraComponentProps) => {
+const CameraComponent = ({image, setImage, showCamera, setShowCamera}: CameraComponentProps) => {
   const camera = useRef<any>(null);
-  const [image, setImage] = useState<string | null>(null);
 
   const handleTakePhoto = () => {
     if (image) {

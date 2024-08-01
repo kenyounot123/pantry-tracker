@@ -20,7 +20,6 @@ export default function EditForm({ handleClose, item }: ItemProps) {
         e.preventDefault()
         const form = e.target as HTMLFormElement
         const formData = new FormData(form);
-        console.log(formData)
         for (let [key, value] of formData.entries()) {
           if (value === "") {
             setError(`${key} field cannot be empty`)

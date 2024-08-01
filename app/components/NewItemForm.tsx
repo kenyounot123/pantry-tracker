@@ -6,20 +6,26 @@ import { useState } from "react";
 import CameraComponent from "./Camera";
 
 
-export default function NewItemForm() {
+export default function NewItemForm({handleClose}:any) {
   const [error, setError] = useState<string | null>()
   const [showCamera, setShowCamera] = useState(false);
+  const [image, setImage] = useState<string | null>(null);
 
   const handleToggleCamera = () => {
     setShowCamera(prev => !prev); // Toggle camera visibility
   };
- 
-  return (
-    <Box onSubmit={(e) => {
-      e.preventDefault()
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (image) {
+      console.log('hi')
+      handleClose()
+      // AI stuff 
+      // Use open vision to read image
+      // Add image to database, add item and quantity to database if not in pantry
+      // Display confirmation message 
+    } else {
       const form = e.target as HTMLFormElement
       const formData = new FormData(form);
-      console.log(formData)
       for (let [key, value] of formData.entries()) {
         if (value === "") {
           setError(`${key} field cannot be empty`)
@@ -29,7 +35,11 @@ export default function NewItemForm() {
       createItem(formData).then(() => {
         form.reset()
       })
-    }} component={"form"} method="POST">
+    }
+  }
+ 
+  return (
+    <Box onSubmit={(e) => {handleSubmit(e)}} component={"form"} method="POST">
       <Typography variant="h5" sx={{mb:3, textAlign:"center", color: "primary.main", fontWeight: 600}}>
         New Item
       </Typography>
@@ -42,10 +52,10 @@ export default function NewItemForm() {
           <Input sx={{bgcolor: "white"}} type="number" name="quantity"/>
         </FormControl>
       </Box>}
-      <CameraComponent showCamera={showCamera} setShowCamera={setShowCamera}/>
+      <CameraComponent image={image} setImage={setImage} showCamera={showCamera} setShowCamera={setShowCamera}/>
       {error && <Typography sx={{ color: "red" }}>{error}</Typography>}
       <Box sx={{mt:10, display:"flex", justifyContent:"center", gap: 2}}>
-        <SubmitButton/>
+        <SubmitButton />
         <Button 
           variant="contained"  
           onClick={handleToggleCamera}
