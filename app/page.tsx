@@ -4,7 +4,6 @@ import AiFormModalButton from "./components/AiFormModalButton";
 import FormModalButton from "./components/FormModalButton";
 import Search from "./components/Search";
 import ItemList from "./components/ItemList";
-import CameraComponent from "./components/Camera";
 
 export default async function Home({searchParams} : {searchParams?: {query?: string; page?: string}}) {
   unstable_noStore();
