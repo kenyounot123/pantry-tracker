@@ -24,7 +24,7 @@ export default async function Home({searchParams} : {searchParams?: {query?: str
         </Box>
         {/* Opens up a modal form */}
         <Box sx={{display: "flex", gap: 1, alignItems: "flex-end", justifyContent: "flex-end"}}>
-          <AiFormModalButton/>
+          {/* <AiFormModalButton/> */}
           <FormModalButton/>
         </Box>
       </Box>
