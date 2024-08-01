@@ -43,7 +43,7 @@ export default function EditModalButton({ pantryItem }: EditItemProps) {
         aria-describedby="modal-edit-description"
       >
         <Box sx={modalStyle}>
-          <EditForm item={pantryItem}/>
+          <EditForm item={pantryItem} handleClose={handleClose}/>
         </Box>
       </Modal>
     </>

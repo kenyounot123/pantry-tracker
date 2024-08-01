@@ -30,6 +30,7 @@ export async function updateItem(id: string, formData: FormData) {
     name: name,
     quantity: quantity
   })
+  revalidatePath("/")
 }
 
 export async function deleteItem(id: string) {
