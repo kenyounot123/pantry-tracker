@@ -1,5 +1,5 @@
 'use client'
-import { FormControl, Input, InputLabel, Box, Typography, Button } from "@mui/material";
+import { FormControl, Input, InputLabel, Box, Typography, TextField } from "@mui/material";
 import { SubmitButton } from "./SubmitButton";
 import { createItem } from "../action";
 import { useState } from "react";
@@ -7,6 +7,7 @@ import { useState } from "react";
 
 export default function NewItemForm() {
   const [error, setError] = useState<string | null>()
+  const [value, setValue] = useState<number | null>(null);
  
   return (
     <Box onSubmit={(e) => {
@@ -27,12 +28,11 @@ export default function NewItemForm() {
       <Typography variant="h5" sx={{mb:3, textAlign:"center", color: "primary.main", fontWeight: 600}}>
         New Item
       </Typography>
-      <Box sx={{display: "flex", gap:2}}>
+      <Box sx={{display: "flex", flexDirection:"column", gap:2}}>
         <FormControl>
-          <InputLabel>Item Name</InputLabel>
-          <Input sx={{bgcolor: "white"}} name="name"/>
+          <TextField sx={{bgcolor:"white"}} name="name" label="Item Name" variant="outlined" />
         </FormControl>
-        <FormControl>
+        <FormControl sx={{width:"20%", alignSelf:"center"}}>
           <InputLabel>Qty</InputLabel>
           <Input sx={{bgcolor: "white"}} type="number" name="quantity"/>
         </FormControl>

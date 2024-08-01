@@ -1,5 +1,5 @@
 "use client"
-import { Box, Typography, Input } from "@mui/material";
+import { Box, Typography, TextField } from "@mui/material";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 
@@ -29,8 +29,8 @@ export default function Search({placeholder} : {placeholder: string}) {
   return (
     <>
       <Box sx={{ mt: 5, display:"flex", alignItems: "center", justifyContent:"center", p:3, gap:3}}>
-        <Input defaultValue={searchParams.get('query')?.toString()} onChange={handleSearchChange} sx={{bgcolor: "white"}} placeholder={placeholder}></Input>
-        <Typography sx={{color: "secondary.main", fontSize: 20, fontWeight: 600}}>Search</Typography>
+        <TextField sx={{bgcolor:"white"}} defaultValue={searchParams.get('query')?.toString()} onChange={handleSearchChange} id="outlined-basic" label={placeholder} variant="outlined" />
+        <Typography sx={{ color: "secondary.main", fontSize: 20, fontWeight: 600}}>Search</Typography>
       </Box>
     </>
   );

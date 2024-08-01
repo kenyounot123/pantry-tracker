@@ -33,7 +33,7 @@ export default function EditModalButton({ pantryItem }: EditItemProps) {
 
   return (
     <>
-      <Button onClick={handleOpen} variant="contained" color="primary">
+      <Button onClick={handleOpen} variant="outlined" color="primary">
         🖊️ Edit
       </Button>
       <Modal

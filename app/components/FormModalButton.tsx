@@ -20,7 +20,7 @@ export default function FormModalButton() {
   const handleClose = () => setOpen(false);
   return (
     <>
-      <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
+      <Box sx={{ mt: 2 }}>
         <Button onClick={handleOpen} size="large" variant="contained">
           Add Item
         </Button>

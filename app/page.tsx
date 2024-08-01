@@ -1,5 +1,6 @@
 import { Container, Box, Typography } from "@mui/material";
 import { unstable_noStore } from "next/cache";
+import AiFormModalButton from "./components/AiFormModalButton";
 import FormModalButton from "./components/FormModalButton";
 import Search from "./components/Search";
 import ItemList from "./components/ItemList";
@@ -22,7 +23,10 @@ export default async function Home({searchParams} : {searchParams?: {query?: str
           </Box>
         </Box>
         {/* Opens up a modal form */}
-        <FormModalButton/>
+        <Box sx={{display: "flex", gap: 1, alignItems: "flex-end", justifyContent: "flex-end"}}>
+          {/* <AiFormModalButton/> */}
+          <FormModalButton/>
+        </Box>
       </Box>
     </Container>
   );
