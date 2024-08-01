@@ -4,6 +4,7 @@ import AiFormModalButton from "./components/AiFormModalButton";
 import FormModalButton from "./components/FormModalButton";
 import Search from "./components/Search";
 import ItemList from "./components/ItemList";
+import CameraComponent from "./components/Camera";
 
 export default async function Home({searchParams} : {searchParams?: {query?: string; page?: string}}) {
   unstable_noStore();
@@ -24,7 +25,7 @@ export default async function Home({searchParams} : {searchParams?: {query?: str
         </Box>
         {/* Opens up a modal form */}
         <Box sx={{display: "flex", gap: 1, alignItems: "flex-end", justifyContent: "flex-end"}}>
-          {/* <AiFormModalButton/> */}
+          <AiFormModalButton/>
           <FormModalButton/>
         </Box>
       </Box>

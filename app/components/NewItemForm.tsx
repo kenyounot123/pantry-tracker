@@ -1,13 +1,18 @@
 'use client'
-import { FormControl, Input, InputLabel, Box, Typography, TextField } from "@mui/material";
+import { FormControl, Input, InputLabel, Box, Typography, TextField, Button } from "@mui/material";
 import { SubmitButton } from "./SubmitButton";
 import { createItem } from "../action";
 import { useState } from "react";
+import CameraComponent from "./Camera";
 
 
 export default function NewItemForm() {
   const [error, setError] = useState<string | null>()
-  const [value, setValue] = useState<number | null>(null);
+  const [showCamera, setShowCamera] = useState(false);
+
+  const handleToggleCamera = () => {
+    setShowCamera(prev => !prev); // Toggle camera visibility
+  };
  
   return (
     <Box onSubmit={(e) => {
@@ -28,7 +33,7 @@ export default function NewItemForm() {
       <Typography variant="h5" sx={{mb:3, textAlign:"center", color: "primary.main", fontWeight: 600}}>
         New Item
       </Typography>
-      <Box sx={{display: "flex", flexDirection:"column", gap:2}}>
+      {!showCamera && <Box sx={{display: "flex", flexDirection:"column", gap:2}}>
         <FormControl>
           <TextField sx={{bgcolor:"white"}} name="name" label="Item Name" variant="outlined" />
         </FormControl>
@@ -36,10 +41,17 @@ export default function NewItemForm() {
           <InputLabel>Qty</InputLabel>
           <Input sx={{bgcolor: "white"}} type="number" name="quantity"/>
         </FormControl>
-      </Box>
+      </Box>}
+      <CameraComponent showCamera={showCamera} setShowCamera={setShowCamera}/>
       {error && <Typography sx={{ color: "red" }}>{error}</Typography>}
-      <Box sx={{mt:5, display:"flex", justifyContent:"center"}}>
+      <Box sx={{mt:10, display:"flex", justifyContent:"center", gap: 2}}>
         <SubmitButton/>
+        <Button 
+          variant="contained"  
+          onClick={handleToggleCamera}
+        >
+          {showCamera ? 'Hide Camera' : 'Magic Camera'}
+        </Button>
       </Box>
     </Box>
   )
