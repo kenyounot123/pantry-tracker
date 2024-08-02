@@ -10,11 +10,12 @@ export async function createItem(userId: string | null, formData: FormData) {
   const quantity = parseInt(formData.get('quantity') as string);
 
   try {
-    await addDoc(collection(db, `users/${userId}/pantry`), {
+    const doc = await addDoc(collection(db, `users/${userId}/pantry`), {
       name: name,
       quantity: quantity
     })
     revalidatePath("/home")
+    return doc.id
   } catch (error) {
     console.error('Error creating item:', error);
   }

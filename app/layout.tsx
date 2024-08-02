@@ -4,7 +4,6 @@ import { ThemeProvider } from '@mui/material/styles';
 import { UserProvider } from './context/UserContext';
 import theme from '../theme'
 import "./globals.css";
-import { ItemProvider } from "./context/ItemContext";
 
 export const metadata: Metadata = {
   title: "Pantry Tracker",
@@ -27,10 +26,8 @@ export default function RootLayout({
         System on the server, as Next.js is streaming chunks of the .html page to the client. */}
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
-            <UserProvider>
-              <ItemProvider>
+            <UserProvider>       
                 {children}
-              </ItemProvider>
             </UserProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>

@@ -1,10 +1,10 @@
 'use client'
 import { Button } from "@mui/material"
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
-import { useItems } from "../context/ItemContext";
+
 
 export default function AiFormModalButton() {
-  // const { items } = useItems();
+
   // const handleMagicClick = async () => {
   //   try {
   //     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {

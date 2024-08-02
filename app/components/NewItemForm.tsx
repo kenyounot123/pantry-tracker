@@ -5,9 +5,11 @@ import { createItem } from "../action";
 import { useState } from "react";
 import CameraComponent from "./Camera";
 import { useUser } from "../context/UserContext";
+import { useHomeItems } from "../home/page";
 
 
 export default function NewItemForm({handleClose}:any) {
+  const { items, setItems } = useHomeItems()
   const { userId } = useUser()
   const [error, setError] = useState<string | null>()
   const [showCamera, setShowCamera] = useState(false);
@@ -33,6 +35,7 @@ export default function NewItemForm({handleClose}:any) {
           return
         }
       }
+     
       createItem(userId, formData).then(() => {
         form.reset()
       })
