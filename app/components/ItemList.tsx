@@ -13,6 +13,7 @@ interface PantryItem {
   quantity: number;
 }
 import { useUser } from "../context/UserContext";
+import { useItems } from "../context/ItemContext"
 
 
 export default function ItemList({ query }: ItemListProps) {
@@ -31,7 +32,7 @@ export default function ItemList({ query }: ItemListProps) {
     };
 
     fetchItems();
-  }, [query, userId]);
+  }, [query, items]);
   return (
     <>
       <Box sx={{display: "flex" }}>

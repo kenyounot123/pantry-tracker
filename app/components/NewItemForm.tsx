@@ -19,7 +19,6 @@ export default function NewItemForm({handleClose}:any) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (image) {
-      console.log('hi')
       handleClose()
       // AI stuff 
       // Use open vision to read image

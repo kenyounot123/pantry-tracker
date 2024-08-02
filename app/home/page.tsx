@@ -5,8 +5,8 @@ import FormModalButton from "../components/FormModalButton";
 import Search from "../components/Search";
 import ItemList from "../components/ItemList";
 import LogOutButton from "../components/LogoutButton";
+import AiFormModalButton from "../components/AiFormModalButton";
 import { useState, useEffect } from 'react';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { useUser } from "../context/UserContext";
 
@@ -16,22 +16,14 @@ export default function Home({searchParams} : {searchParams?: {query?: string; p
   const { userId, setUserId } = useUser()
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const auth = getAuth();
   const query = searchParams?.query || ""
-  console.log(auth.currentUser)
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUserId(user.uid);
-      } else {
-        router.replace('/'); // Redirect to login page if not authenticated
-      }
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, [auth, router]);
+    if (!userId) {
+      router.replace('/'); // Redirect to login page if not authenticated
+    }
+    setLoading(false);
+  }, []);
 
 
   if (loading) return <Typography sx={{height:"100vh", display: "flex", justifyContent:"center", alignItems:"center", color:"primary.main"}}>Checking if user is logged in...</Typography>; // Optionally show a loading indicator
@@ -52,7 +44,7 @@ export default function Home({searchParams} : {searchParams?: {query?: string; p
         </Box>
         {/* Opens up a modal form */}
         <Box sx={{display: "flex", gap: 1, alignItems: "flex-end", justifyContent: "flex-end"}}>
-          {/* <AiFormModalButton/> */}
+          <AiFormModalButton/>
           <FormModalButton/>
         </Box>
       </Box>

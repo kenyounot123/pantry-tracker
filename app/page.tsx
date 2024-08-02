@@ -2,21 +2,21 @@
 import { useRouter } from 'next/navigation'
 import { Box, Typography, Button } from "@mui/material";
 import Image from "next/image";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { signInWithPopup } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-import { app, db } from "./lib/firebase";
+import { db, auth } from "./lib/firebase";
+import { useUser } from './context/UserContext';
+import { provider } from './lib/firebase';
 export default function Login() {
+  const { setUserId } = useUser()
   const router = useRouter()
 
   const handleSignIn = async () => {
     try {
-      const auth = getAuth(app)
-      const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider)
       const user = result.user 
       if (user) {
-        console.log("User signed in:", user);
-
+        setUserId(user.uid)
         const { uid, displayName, email, photoURL } = user;
 
         const userRef = doc(db, 'users', uid);

@@ -4,6 +4,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { UserProvider } from './context/UserContext';
 import theme from '../theme'
 import "./globals.css";
+import { ItemProvider } from "./context/ItemContext";
 
 export const metadata: Metadata = {
   title: "Pantry Tracker",
@@ -27,7 +28,9 @@ export default function RootLayout({
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <UserProvider>
-              {children}
+              <ItemProvider>
+                {children}
+              </ItemProvider>
             </UserProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>
