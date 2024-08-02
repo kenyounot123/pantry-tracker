@@ -1,9 +1,37 @@
+'use client'
 import Item from "./Item"
 import { getFilteredItems } from "@/data-access/items"
 import { Box, Typography} from "@mui/material"
+import { useState, useEffect } from "react"
 
-export default async function ItemList({query}: {query: string}) {
-  const items = await getFilteredItems(query)
+interface ItemListProps {
+  query: string;
+}
+interface PantryItem {
+  id: string;
+  name: string;
+  quantity: number;
+}
+import { useUser } from "../context/UserContext";
+
+
+export default function ItemList({ query }: ItemListProps) {
+  const [items, setItems] = useState<PantryItem[]>([]);
+  const { userId, setUserId } = useUser()
+
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const fetchedItems = await getFilteredItems(userId, query);
+        setItems(fetchedItems);
+      } catch (error) {
+        console.log('Failed to fetch items');
+      }
+    };
+
+    fetchItems();
+  }, [query, userId]);
   return (
     <>
       <Box sx={{display: "flex" }}>

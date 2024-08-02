@@ -3,7 +3,6 @@ import { useRouter } from 'next/navigation'
 import { Box, Typography, Button } from "@mui/material";
 import Image from "next/image";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { initializeApp } from 'firebase-admin/app';
 import { doc, setDoc } from "firebase/firestore";
 import { app, db } from "./lib/firebase";
 export default function Login() {

@@ -1,17 +1,47 @@
+'use client'
 import { Container, Box, Typography } from "@mui/material";
-import { unstable_noStore } from "next/cache";
 // import AiFormModalButton from "./components/AiFormModalButton";
 import FormModalButton from "../components/FormModalButton";
 import Search from "../components/Search";
 import ItemList from "../components/ItemList";
-import LogoutButton from "../components/LogoutButton";
+import LogOutButton from "../components/LogoutButton";
+import { useState, useEffect } from 'react';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { useRouter } from 'next/navigation';
+import { useUser } from "../context/UserContext";
 
-export default async function Home({searchParams} : {searchParams?: {query?: string; page?: string}}) {
-  unstable_noStore();
+
+
+export default function Home({searchParams} : {searchParams?: {query?: string; page?: string}}) {
+  const { userId, setUserId } = useUser()
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const auth = getAuth();
   const query = searchParams?.query || ""
+  console.log(auth.currentUser)
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserId(user.uid);
+      } else {
+        router.replace('/'); // Redirect to login page if not authenticated
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, [auth, router]);
+
+
+  if (loading) return <Typography sx={{height:"100vh", display: "flex", justifyContent:"center", alignItems:"center", color:"primary.main"}}>Checking if user is logged in...</Typography>; // Optionally show a loading indicator
+
+  // If user is not authenticated, nothing is rendered
+  if (!userId) return null;
+
   return (
     <Container> 
-      <LogoutButton/>
+      <LogOutButton/>
       <Typography sx={{textAlign: "center", color: "primary.main", fontWeight: 600, fontSize: 48}} variant="h2">Track Your Pantry Items</Typography>
       <Box sx={{maxWidth: { xs:"100%", md:"80%"}, mx: "auto"}}>
         <Box sx={{ borderRadius: '5px', bgcolor: "primary.light", pb:2}}>

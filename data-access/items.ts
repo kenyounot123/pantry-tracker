@@ -7,9 +7,9 @@ interface PantryItem {
   name: string;
   quantity: number;
 }
-export async function getFilteredItems(query:string): Promise<PantryItem[]> {
+export async function getFilteredItems(userId: string | null, query:string): Promise<PantryItem[]> {
   try {
-    const q = await getDocs(collection(db, "pantry"));
+    const q = await getDocs(collection(db, `users/${userId}/pantry`));
     const docs: PantryItem[] = q.docs.map(doc => {
       const docData = doc.data() as Partial<PantryItem>; 
       return {

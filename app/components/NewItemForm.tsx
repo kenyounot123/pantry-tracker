@@ -4,9 +4,11 @@ import { SubmitButton } from "./SubmitButton";
 import { createItem } from "../action";
 import { useState } from "react";
 import CameraComponent from "./Camera";
+import { useUser } from "../context/UserContext";
 
 
 export default function NewItemForm({handleClose}:any) {
+  const { userId } = useUser()
   const [error, setError] = useState<string | null>()
   const [showCamera, setShowCamera] = useState(false);
   const [image, setImage] = useState<string | null>(null);
@@ -32,7 +34,7 @@ export default function NewItemForm({handleClose}:any) {
           return
         }
       }
-      createItem(formData).then(() => {
+      createItem(userId, formData).then(() => {
         form.reset()
       })
     }

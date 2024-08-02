@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
+import { UserProvider } from './context/UserContext';
 import theme from '../theme'
 import "./globals.css";
 
@@ -25,8 +26,9 @@ export default function RootLayout({
         System on the server, as Next.js is streaming chunks of the .html page to the client. */}
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
-            {children}
-
+            <UserProvider>
+              {children}
+            </UserProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>

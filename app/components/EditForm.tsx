@@ -2,6 +2,7 @@
 import { Typography, Box, FormControl, InputLabel, Input, Button } from "@mui/material"
 import { useState } from "react";
 import { updateItem } from "../action";
+import { useUser } from "../context/UserContext";
 interface PantryItem {
   id: string;
   name: string;
@@ -13,24 +14,35 @@ interface ItemProps {
 }
 
 export default function EditForm({ handleClose, item }: ItemProps) {
+  const { userId } = useUser()
   const [error, setError] = useState<string | null>()
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    
+    let hasError = false;
+    for (let [key, value] of formData.entries()) {
+      if (value === "") {
+        setError(`${key} field cannot be empty`);
+        hasError = true;
+        break;
+      }
+    }
+    if (hasError) return;
+
+    try {
+      await updateItem(userId, item.id, formData);
+      form.reset();
+      handleClose();
+    } catch (error) {
+      setError("Failed to update item. Please try again.");
+    }
+  }
   return (
     <>
-      <Box onSubmit={(e) => {
-        e.preventDefault()
-        const form = e.target as HTMLFormElement
-        const formData = new FormData(form);
-        for (let [key, value] of formData.entries()) {
-          if (value === "") {
-            setError(`${key} field cannot be empty`)
-            return
-          }
-        }
-        updateItem(item.id, formData).then(() => {
-          form.reset()
-          handleClose()
-        })
-      }} component={"form"} action={updateItem.bind(null, item.id)}>
+      <Box onSubmit={handleSubmit} component={"form"}>
         <Typography variant="h5" sx={{mb:3, textAlign:"center", color: "primary.main", fontWeight: 600}}>
           Edit {item.name.toUpperCase()}
         </Typography>
