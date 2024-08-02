@@ -1,4 +1,4 @@
-import { collection, addDoc, getDocs } from "firebase/firestore"; 
+import { collection, query, where, onSnapshot, Unsubscribe, getDocs } from "firebase/firestore"; 
 import { db } from "@/app/lib/firebase"
 
 
@@ -7,7 +7,7 @@ interface PantryItem {
   name: string;
   quantity: number;
 }
-export async function getFilteredItems(userId: string | null, query:string): Promise<PantryItem[]> {
+export async function getAllItems(userId: string|null): Promise<PantryItem[]> {
   try {
     const q = await getDocs(collection(db, `users/${userId}/pantry`));
     const docs: PantryItem[] = q.docs.map(doc => {
@@ -18,10 +18,8 @@ export async function getFilteredItems(userId: string | null, query:string): Pro
         quantity: docData.quantity ?? 0, 
       };
     });
-    const filteredItems = docs.filter(item =>
-      item.name.toLowerCase().includes(query.toLowerCase())
-    );
-    return filteredItems
+
+    return docs
     
   } catch (error) {
     console.error("Error fetching data from Firestore:", error);

@@ -6,30 +6,33 @@ import Search from "../components/Search";
 import ItemList from "../components/ItemList";
 import LogOutButton from "../components/LogoutButton";
 import AiFormModalButton from "../components/AiFormModalButton";
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect, useMemo } from 'react';
 import { useUser } from "../context/UserContext";
+import { getAllItems } from "@/data-access/items";
 
+interface PantryItem {
+  id: string;
+  name: string;
+  quantity: number;
+}
 
-
-export default function Home({searchParams} : {searchParams?: {query?: string; page?: string}}) {
-  const { userId, setUserId } = useUser()
-  const [loading, setLoading] = useState(true);
-  const router = useRouter();
-  const query = searchParams?.query || ""
-
+export default function Home() {
+  const { userId } = useUser()
+  const [query, setQuery] = useState("")
+  const [items, setItems] = useState<PantryItem[]>([])
   useEffect(() => {
-    if (!userId) {
-      router.replace('/'); // Redirect to login page if not authenticated
+    const fetchItems = async () => {
+      const allItems = await getAllItems(userId)
+      setItems(allItems)
     }
-    setLoading(false);
-  }, []);
+    fetchItems()
+  }, [])
 
-
-  if (loading) return <Typography sx={{height:"100vh", display: "flex", justifyContent:"center", alignItems:"center", color:"primary.main"}}>Checking if user is logged in...</Typography>; // Optionally show a loading indicator
-
-  // If user is not authenticated, nothing is rendered
-  if (!userId) return null;
+  const filteredItems = useMemo(() => {
+    return items.filter(item =>
+      item.name.toLowerCase().includes(query.toLowerCase())
+    );
+  }, [query, items]);
 
   return (
     <Container> 
@@ -37,9 +40,9 @@ export default function Home({searchParams} : {searchParams?: {query?: string; p
       <Typography sx={{textAlign: "center", color: "primary.main", fontWeight: 600, fontSize: 48}} variant="h2">Track Your Pantry Items</Typography>
       <Box sx={{maxWidth: { xs:"100%", md:"80%"}, mx: "auto"}}>
         <Box sx={{ borderRadius: '5px', bgcolor: "primary.light", pb:2}}>
-          <Search placeholder="Search Items..."/>
+          <Search query={query} setQuery={setQuery} />
           <Box sx={{overflowY: 'auto', maxHeight:500, mx:2}}>
-            <ItemList query={query}/>
+            <ItemList items={filteredItems}/>
           </Box>
         </Box>
         {/* Opens up a modal form */}

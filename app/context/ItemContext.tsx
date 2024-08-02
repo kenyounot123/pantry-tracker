@@ -8,7 +8,7 @@ interface PantryItem {
 }
 
 interface ItemContextType {
-  items: PantryItem[];
+  items: PantryItem[] | undefined;
   setItems: React.Dispatch<React.SetStateAction<PantryItem[]>>;
 }
 
