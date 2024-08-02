@@ -15,7 +15,7 @@ interface ItemProps {
 export default function Item({pantryItem}: ItemProps) {
   return (
     <>
-      <Box sx={{display: "flex", justifyContent:"space-between", alignItems:"center"}} borderBottom={1} borderColor={"secondary.main"} py={2} my={2}>
+      <Box sx={{display: "flex", alignItems:"center"}} borderBottom={1} borderColor={"secondary.main"} py={2} my={2}>
         <Typography sx={{ flexGrow: 1, color: "primary.main", fontWeight: 600, maxWidth: "40%" }}>
           {pantryItem.name}
         </Typography>

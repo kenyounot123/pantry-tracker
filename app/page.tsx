@@ -1,33 +1,19 @@
-import { Container, Box, Typography } from "@mui/material";
-import { unstable_noStore } from "next/cache";
-// import AiFormModalButton from "./components/AiFormModalButton";
-import FormModalButton from "./components/FormModalButton";
-import Search from "./components/Search";
-import ItemList from "./components/ItemList";
+import { Box, Container, Typography, Button } from "@mui/material";
+import Image from "next/image";
 
-export default async function Home({searchParams} : {searchParams?: {query?: string; page?: string}}) {
-  unstable_noStore();
-  const query = searchParams?.query || ""
+export default function Home() {
   return (
-    <Container> 
-      <Typography sx={{textAlign: "center", color: "primary.main", fontWeight: 600, fontSize: 48}} variant="h2">Track Your Pantry Items</Typography>
-      <Box sx={{maxWidth: { xs:"100%", md:"80%"}, mx: "auto"}}>
-        <Box sx={{ borderRadius: '5px', bgcolor: "primary.light", pb:2}}>
-          <Search placeholder="Search Items..."/>
-          <Box sx={{display: "flex", p:2}}>
-            <Typography sx={{ maxWidth: "40%", color: "secondary.main", flexGrow: 1, fontSize: 20, fontWeight: 600}}>Item</Typography>
-            <Typography sx={{color: "secondary.main", flexGrow: 1, fontSize: 20, fontWeight: 600}}>Qty</Typography>
-          </Box>
-          <Box sx={{overflowY: 'auto', maxHeight:500, mx:2}}>
-            <ItemList query={query}/>
-          </Box>
+    <Box sx={{ width:"80%", mx: "auto",  height: {sm: "100%", lg: "95vh"}, display: "flex", justifyContent:"center", alignItems:"center"}}>
+      <Box sx={{ display: { lg: "flex"}, gap: 1, alignItems: "center" }}>
+        <Box sx={{display: "flex", flexDirection: "column", gap: 5, my:"auto", maxWidth: {lg:"50%"}}}>
+          <Typography sx={{fontSize:64, fontWeight:600, color:"primary.main"}} variant="h1">Track and Create with Magic Pantry</Typography>
+          <Typography sx={{fontSize:32, fontWeight:600, color:"secondary.main"}} variant="h3">The future of tracking items with simple to use AI features</Typography>
+          <Box sx={{ flexBasis: "50%" }}><Button sx={{fontSize: 24 }} variant="contained">Sign In</Button></Box>
         </Box>
-        {/* Opens up a modal form */}
-        <Box sx={{display: "flex", gap: 1, alignItems: "flex-end", justifyContent: "flex-end"}}>
-          {/* <AiFormModalButton/> */}
-          <FormModalButton/>
+        <Box my={"auto"} sx={{flexGrow: 1, mt:5}}>
+          <Image sizes="100vw" alt="food pantry tracker" src={"/hero-img2.jpg"} width={0} height={0} style={{width: "100%", height: "100%"}}/>
         </Box>
       </Box>
-    </Container>
-  );
+    </Box>
+  )
 }
