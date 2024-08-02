@@ -17,7 +17,7 @@ import { useUser } from "../context/UserContext";
 
 export default function ItemList({ query }: ItemListProps) {
   const [items, setItems] = useState<PantryItem[]>([]);
-  const { userId, setUserId } = useUser()
+  const { userId } = useUser()
 
 
   useEffect(() => {
