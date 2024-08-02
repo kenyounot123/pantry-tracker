@@ -3,6 +3,7 @@ import { Typography, Box, FormControl, InputLabel, Input, Button } from "@mui/ma
 import { useState } from "react";
 import { updateItem } from "../action";
 import { useUser } from "../context/UserContext";
+import { useHomeItems } from "../home/page";
 interface PantryItem {
   id: string;
   name: string;
@@ -14,8 +15,10 @@ interface ItemProps {
 }
 
 export default function EditForm({ handleClose, item }: ItemProps) {
+  const { items, setItems } = useHomeItems()
   const { userId } = useUser()
   const [error, setError] = useState<string | null>()
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
@@ -32,8 +35,16 @@ export default function EditForm({ handleClose, item }: ItemProps) {
     }
     if (hasError) return;
 
+    const updatedName = formData.get('name') as string;
+    const updatedQuantity = parseInt(formData.get('quantity') as string);
+
     try {
       await updateItem(userId, item.id, formData);
+      setItems((prevItems) => 
+        prevItems.map(prevItem => 
+          prevItem.id === item.id ? { ...prevItem, name: updatedName, quantity: updatedQuantity } : prevItem
+        )
+      )
       form.reset();
       handleClose();
     } catch (error) {

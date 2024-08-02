@@ -7,7 +7,12 @@ import CameraComponent from "./Camera";
 import { useUser } from "../context/UserContext";
 import { useHomeItems } from "../home/page";
 
-
+interface PantryItem {
+  id: string;
+  name: string;
+  quantity: number;
+}
+ 
 export default function NewItemForm({handleClose}:any) {
   const { items, setItems } = useHomeItems()
   const { userId } = useUser()
@@ -36,8 +41,12 @@ export default function NewItemForm({handleClose}:any) {
         }
       }
      
-      createItem(userId, formData).then(() => {
+      createItem(userId, formData).then((result) => {
         form.reset()
+        const itemName = formData.get('name') as string; // Replace 'name' with the actual field name
+        const itemQuantity = parseInt(formData.get('quantity') as string);
+        const newItem = {id: result, name: itemName, quantity: itemQuantity}  as PantryItem
+        setItems((prevItems) => [...prevItems, newItem])
       })
     }
   }
