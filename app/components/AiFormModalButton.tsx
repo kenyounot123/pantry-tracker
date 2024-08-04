@@ -1,50 +1,58 @@
 'use client'
-import { Button } from "@mui/material"
+import { Button, Modal, Box } from "@mui/material"
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import { useHomeItems } from "../home/page";
+import { useState } from "react";
+import Recipe from "./Recipe";
+import { suggestRecipe } from "../action";
 
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 600,
+  bgcolor: 'primary.light',
+  borderRadius: 3,
+  boxShadow: 24,
+  p: 4,
+  height: 400,
+  overflowY: 'auto'
+};
 
 export default function AiFormModalButton() {
+  const { items } = useHomeItems()
+  const [loading, setLoading] = useState<boolean>(true)
+  const [open, setOpen] = useState(false);
+  const [recipe, setRecipe] = useState<string | null>("")
 
-  // const handleMagicClick = async () => {
-  //   try {
-  //     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-  //       method: "POST",
-  //       headers: {
-  //         "Authorization": `Bearer ${process.env.NEXT_PUBLIC_OPENROUTER_API_KEY}`,
-  //         "Content-Type": "application/json"
-  //       },
-  //       body: JSON.stringify({
-  //         "model": "meta-llama/llama-3.1-8b-instruct:free",
-  //         messages: [
-  //           {
-  //             role: "system",
-  //             content:
-  //               "You are a world class chef with the best culinary practices. I will give you the list of all the ingredients and it's quantity I have in my pantry and I want you to only return a delicious recipe made out of these items.",
-  //           },
-  //           { role: "user", content: items },
-  //         ],
-  //       })
-  //     });
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
-  //     // Check if the response is ok (status code 200-299)
-  //     if (!response.ok) {
-  //       throw new Error(`HTTP error! Status: ${response.status}`);
-  //     }
-
-  //     // Parse the response as JSON
-  //     const data = await response.json();
-
-  //     // Log the response or handle it as needed
-  //     console.log(data);
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // }
+  const handleMagicClick = async () => {
+    handleOpen()
+    const fetchedRecipe = await suggestRecipe(items) 
+    setRecipe(fetchedRecipe)
+    setLoading(false)
+  }
 
   return (
-    <Button sx={{}} variant="outlined">
-      <AutoAwesomeIcon/>
-    </Button>
+    <>
+      <Button sx={{}} onClick={handleMagicClick} variant="outlined">
+        <AutoAwesomeIcon/>
+      </Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Recipe recipe={recipe} loading={loading}/>
+        </Box>
+      </Modal>
+    </>
+    
   )
   
 }

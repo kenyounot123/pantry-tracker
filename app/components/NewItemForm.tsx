@@ -23,6 +23,7 @@ export default function NewItemForm({handleClose}:any) {
   const handleToggleCamera = () => {
     setShowCamera(prev => !prev); // Toggle camera visibility
   };
+  
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (image) {
