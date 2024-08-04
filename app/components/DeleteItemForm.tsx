@@ -2,7 +2,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import { deleteItem } from "../action";
 import { useUser } from "../context/UserContext";
-import { useHomeItems } from "../home/page";
+import { useHomeItems } from "../context/HomeContext";
 
 
 interface PantryItem {

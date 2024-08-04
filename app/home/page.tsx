@@ -9,7 +9,7 @@ import AiFormModalButton from "../components/AiFormModalButton";
 import React, { useState, useEffect, useMemo } from 'react';
 import { useUser } from "../context/UserContext";
 import { getAllItems } from "@/data-access/items";
-import { createContext, useContext } from "react";
+import { HomeContext } from "../context/HomeContext";
 
 interface PantryItem {
   id: string;
@@ -17,22 +17,6 @@ interface PantryItem {
   quantity: number;
 }
 
-
-export const HomeContext = createContext<{
-  items: PantryItem[] 
-  setItems: React.Dispatch<React.SetStateAction<PantryItem[]>>;
-}>({
-  items: [],
-  setItems: () => []
-});
-
-export const useHomeItems = () => {
-  const context = useContext(HomeContext);
-  if (context === undefined) {
-    throw new Error("useHomeItems must be used within an HomeProvider")
-  }
-  return context
-}
 
 export default function Home() {
   const { userId } = useUser()

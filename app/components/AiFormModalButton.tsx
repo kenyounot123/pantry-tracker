@@ -1,7 +1,7 @@
 'use client'
 import { Button, Modal, Box } from "@mui/material"
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
-import { useHomeItems } from "../home/page";
+import { useHomeItems } from "../context/HomeContext";
 import { useState } from "react";
 import Recipe from "./Recipe";
 import { suggestRecipe } from "../action";

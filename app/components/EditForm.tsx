@@ -3,7 +3,7 @@ import { Typography, Box, FormControl, InputLabel, Input, Button } from "@mui/ma
 import { useState } from "react";
 import { updateItem } from "../action";
 import { useUser } from "../context/UserContext";
-import { useHomeItems } from "../home/page";
+import { useHomeItems } from "../context/HomeContext";
 interface PantryItem {
   id: string;
   name: string;

@@ -5,7 +5,7 @@ import { createItem } from "../action";
 import { useState } from "react";
 import CameraComponent from "./Camera";
 import { useUser } from "../context/UserContext";
-import { useHomeItems } from "../home/page";
+import { useHomeItems } from "../context/HomeContext";
 
 interface PantryItem {
   id: string;
