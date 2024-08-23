@@ -1,7 +1,6 @@
 'use client'
 import Item from "./Item"
 import { Box, Typography} from "@mui/material"
-import { useState, useEffect } from "react"
 
 interface ItemListProps {
   items: PantryItem[];

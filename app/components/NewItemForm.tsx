@@ -12,13 +12,17 @@ interface PantryItem {
   name: string;
   quantity: number;
 }
+interface CameraImage {
+  itemName: string
+  encoding: string
+}
  
 export default function NewItemForm({handleClose}:any) {
   const { items, setItems } = useHomeItems()
   const { userId } = useUser()
   const [error, setError] = useState<string | null>()
   const [showCamera, setShowCamera] = useState(false);
-  const [image, setImage] = useState<string | null>(null);
+  const [image, setImage] = useState<CameraImage | null>(null);
 
   const handleToggleCamera = () => {
     setShowCamera(prev => !prev); // Toggle camera visibility
@@ -29,9 +33,8 @@ export default function NewItemForm({handleClose}:any) {
     if (image) {
       handleClose()
       // Classify the image taken -> save to firestore
-      const item = await classifyImage(image)
       const data = {
-        name: item,
+        name: image.itemName,
         quantity: 1,
       }
       createItem(userId, data).then((result) => {
@@ -61,7 +64,7 @@ export default function NewItemForm({handleClose}:any) {
   return (
     <Box onSubmit={(e) => {handleSubmit(e)}} component={"form"} method="POST">
       <Typography variant="h5" sx={{mb:3, textAlign:"center", color: "primary.main", fontWeight: 600}}>
-        New Item
+        {image ? image.itemName : 'New Item'}
       </Typography>
       {!showCamera && <Box sx={{display: "flex", flexDirection:"column", gap:2}}>
         <FormControl>
