@@ -14,7 +14,7 @@ interface CameraComponentProps {
 const CameraComponent = ({image, setImage, showCamera, setShowCamera}: CameraComponentProps) => {
   const camera = useRef<any>(null);
 
-  const handleTakePhoto = () => {
+  const handleTakePhoto = async () => {
     if (image) {
       setImage(null)
     }

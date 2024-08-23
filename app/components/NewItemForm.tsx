@@ -6,7 +6,7 @@ import { useState } from "react";
 import CameraComponent from "./Camera";
 import { useUser } from "../context/UserContext";
 import { useHomeItems } from "../context/HomeContext";
-
+import { classifyImage } from "../action";
 interface PantryItem {
   id: string;
   name: string;
@@ -24,14 +24,20 @@ export default function NewItemForm({handleClose}:any) {
     setShowCamera(prev => !prev); // Toggle camera visibility
   };
   
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (image) {
       handleClose()
-      // AI stuff 
-      // Use open vision to read image
-      // Add image to database, add item and quantity to database if not in pantry
-      // Display confirmation message 
+      // Classify the image taken -> save to firestore
+      const item = await classifyImage(image)
+      const data = {
+        name: item,
+        quantity: 1,
+      }
+      createItem(userId, data).then((result) => {
+        const newItem = {id: result, name: data.name, quantity: data.quantity}  as PantryItem
+        setItems((prevItems) => [...prevItems, newItem])
+      })
     } else {
       const form = e.target as HTMLFormElement
       const formData = new FormData(form);
